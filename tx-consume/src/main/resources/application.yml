@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: tx-consume
+  main:
+    #解决bean重复定义的。设置为true时，后定义的bean会覆盖之前定义的相同名称的bean。
+    allow-bean-definition-overriding: true
+  #主要功能是收集系统的时序数据，从而跟踪微服务架构的系统时序等问题。Zipkin还提供了一个非常友好的界面，来帮助分析追踪数据。
+  zipkin:
+    #zipkin指向路径
+    base-url: http://localhost:9411
+  #它在日志中引入唯一ID，以保证微服务调用之间的一致性，这样你就能跟踪某个请求是如何从一个微服务传递到下一个(监控服务调用)
+  sleuth:
+    web:
+      client:
+        enabled: true
+    sampler:
+      #采样率为100
+      probability: 1.0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://root:123456@localhost:9999/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+    enabled: true
+moduleName: tx-consume
+
+
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
+ribbon:
+  eureka:
+    enabled: true
+  eager-load:
+    enabled: true
+    clients:
+    - tx-server
+
+
+server:
+  port: 18800
+
+

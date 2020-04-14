@@ -1,0 +1,24 @@
+server:
+  port: 9999
+
+
+eureka:
+  ##实例
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    ##指向默认地址（指向与本地实例相同的主机）
+    serviceUrl:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:${server.port}/eureka/
+
+##配置安全登录校验用户和密码
+spring:
+  application:
+    name: springcloud
+  security:
+    user:
+      name: root
+      password: 123456
