@@ -1,4 +1,4 @@
-package com.txeureka;
+package com;
 
 import org.springframework.boot.test.context.SpringBootTest;
 

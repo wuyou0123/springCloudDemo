@@ -1,0 +1,47 @@
+server:
+  port: 8899
+
+consume:
+  #客户端（消费者）
+  tx-consume:
+    uri: lb://tx-consume
+
+spring:
+  application:
+    name: tx-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        #配置参数
+          - id: tx-consume
+            uri: lb://tx-consume
+            predicates:
+            - Path=/test/**
+            filters:
+            - StripPrefix=1
+            - AddRequestHeader=X-Request-Foo, Bar
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/fallback/resp
+
+##网关日志信息
+logging:
+  level:
+    org.springframework.cloud.gateway: trace
+    org.springframework.http.server.reactive: debug
+    org.springframework.web.reactive: debug
+    reactor.ipc.netty: debug
+
+##配置注册中心
+eureka:
+  client:
+    service-url:
+      defaultZone: http://root:123456@localhost:9999/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+    enabled: true
+moduleName: tx-gateway
