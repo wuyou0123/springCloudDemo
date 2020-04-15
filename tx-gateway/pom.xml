@@ -48,12 +48,6 @@
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
 
-        <!--保护eureka服务器-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
         <!--添加netflix-hystrix进行熔断保护-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -70,6 +64,17 @@
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.common</groupId>
+            <artifactId>tx-common-utils</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 

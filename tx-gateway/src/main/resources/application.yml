@@ -2,31 +2,34 @@ server:
   port: 8899
 
 consume:
-  #客户端（消费者）
+  # 设置
   tx-consume:
     uri: lb://tx-consume
+
 
 spring:
   application:
     name: tx-gateway
   cloud:
     gateway:
-      discovery:
-        locator:
+      discovery: #是否与服务发现组件进行结合，通过 serviceId(必须设置成大写) 转发到具体的服务实例。默认为false，设为true便开启通过服务中心的自动根据 serviceId 创建路由的功能
+        locator: #路由访问方式：http://Gateway_HOST:Gateway_PORT/大写的serviceId/**，其中微服务应用名默认大写访问。
           enabled: true
       routes:
-        #配置参数
-          - id: tx-consume
-            uri: lb://tx-consume
-            predicates:
-            - Path=/test/**
-            filters:
-            - StripPrefix=1
-            - AddRequestHeader=X-Request-Foo, Bar
-            - name: Hystrix
-              args:
-                name: fallbackcmd
-                fallbackUri: forward:/fallback/resp
+      # 设置路由参数（id/uri/（Predicates 和 Filters 作用于特定路由））
+      - id: tx-consume  #网关路由到对应的客户端
+        uri: lb://tx-consume
+        predicates: ##客户端访问路径
+        - Path=/test/**
+        filters: ##过滤器
+        - StripPrefix=1
+        - AddRequestHeader=X-Request-Foo, Bar
+        ## 熔断路由器
+        - name: Hystrix
+          args:
+            name: fallbackcmd
+            fallbackUri: forward:/fallback/resp
+
 
 ##网关日志信息
 logging:
@@ -35,6 +38,15 @@ logging:
     org.springframework.http.server.reactive: debug
     org.springframework.web.reactive: debug
     reactor.ipc.netty: debug
+
+##配置熔断超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
 
 ##配置注册中心
 eureka:
@@ -45,3 +57,10 @@ eureka:
     fetch-registry: true
     enabled: true
 moduleName: tx-gateway
+
+##避免第一次加载失败（饥饿加载模式）
+ribbon:
+  eager-load:
+    enabled: true
+    clients:
+    - tx-consume
