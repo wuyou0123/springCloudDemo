@@ -67,6 +67,12 @@
             <artifactId>tx-common-client</artifactId>
             <version>1.0.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.common</groupId>
+            <artifactId>tx-common-utils</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

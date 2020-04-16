@@ -20,12 +20,6 @@
     </properties>
 
     <dependencies>
-        <!--加入此依赖回引起jar包冲突-->
-        <!--<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>-->
-
         <!--geteway依赖-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -71,11 +65,11 @@
         <artifactId>javax.servlet-api</artifactId>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>com.common</groupId>
             <artifactId>tx-common-utils</artifactId>
             <version>1.0.0</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
     <dependencyManagement>
