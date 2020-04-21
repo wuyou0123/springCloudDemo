@@ -1,6 +1,6 @@
 package com.common.fallback;
 
-import com.common.client.UserClient;
+import com.common.client.userClient.UserClient;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;

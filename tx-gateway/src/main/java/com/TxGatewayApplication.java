@@ -15,7 +15,10 @@ import org.springframework.context.annotation.Bean;
 public class TxGatewayApplication {
 
     @Value("${consume.tx-consume.uri}")
-    private  String uri;
+    private  String user;
+
+    @Value("${consume.tx-dept-consume.uri}")
+    private  String dept;
 
     public static void main(String[] args) {
         SpringApplication.run(TxGatewayApplication.class, args);
@@ -31,7 +34,9 @@ public class TxGatewayApplication {
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(r -> r.path("/test/**")
-                             .uri(uri))
+                             .uri(user))
+                .route(r -> r.path("/dept/**")
+                        .uri(dept))
                              .build();
     }
 

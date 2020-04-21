@@ -50,12 +50,24 @@
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.13</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.common</groupId>
-            <artifactId>tx-common-utils</artifactId>
+            <artifactId>tx-common-pojo</artifactId>
             <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
+
+        <!--<dependency>
+            <groupId>com.common</groupId>
+            <artifactId>tx-common-pojo</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>-->
 
     </dependencies>
 

@@ -1,6 +1,6 @@
 package com.txconsume.service.serviceImpl;
 
-import com.common.client.UserClient;
+import com.common.client.userClient.UserClient;
 import com.txconsume.service.TestService;
 import org.springframework.stereotype.Service;
 

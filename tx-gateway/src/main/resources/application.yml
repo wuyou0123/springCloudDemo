@@ -5,6 +5,8 @@ consume:
   # 设置
   tx-consume:
     uri: lb://tx-consume
+  tx-dept-consume:
+    uri: lb://tx-dept-consume
 
 
 spring:
@@ -12,16 +14,29 @@ spring:
     name: tx-gateway
   cloud:
     gateway:
-      discovery: #是否与服务发现组件进行结合，通过 serviceId(必须设置成大写) 转发到具体的服务实例。默认为false，设为true便开启通过服务中心的自动根据 serviceId 创建路由的功能
+      discovery: #是否与服务发现组件进行结合,转发到具体的服务实例。默认为false，设为true便开启通过服务中心的自动根据 serviceId 创建路由的功能
         locator: #路由访问方式：http://Gateway_HOST:Gateway_PORT/大写的serviceId/**，其中微服务应用名默认大写访问。
           enabled: true
-      routes:
+      routes: ##（路由核心）
       # 设置路由参数（id/uri/（Predicates 和 Filters 作用于特定路由））
       - id: tx-consume  #网关路由到对应的客户端
-        uri: lb://tx-consume
-        predicates: ##客户端访问路径
+        uri: lb://tx-consume   #代表从注册中心获取服务，且以lb(load-balance)负载均衡方式转发
+        predicates: ##客户端访问路径(表示将以/HiController开头的请求转发到uri为lb://eureka-client的地址上)
         - Path=/test/**
-        filters: ##过滤器
+        filters: ##过滤器  （StripPrefix Filter 是一个请求路径截取的功能，我们可以利用这个功能来做特殊业务的转发）
+        - StripPrefix=1 # #StripPrefix=1就代表截取路径的个数，这样配置后当请求/hello/world/HiController/test后端匹配到的请求路径
+        - AddRequestHeader=X-Request-Foo, Bar
+        ## 熔断路由器
+        - name: Hystrix
+          args:
+            name: fallbackcmd
+            fallbackUri: forward:/fallback/resp
+            ##部门
+      - id: tx-dept-consume
+        uri: lb://tx-dept-consume
+        predicates:
+        - Path=/dept/**
+        filters:
         - StripPrefix=1
         - AddRequestHeader=X-Request-Foo, Bar
         ## 熔断路由器
@@ -29,6 +44,7 @@ spring:
           args:
             name: fallbackcmd
             fallbackUri: forward:/fallback/resp
+
 
 
 
@@ -65,3 +81,4 @@ ribbon:
     enabled: true
     clients:
     - tx-consume
+    - tx-dept-consume

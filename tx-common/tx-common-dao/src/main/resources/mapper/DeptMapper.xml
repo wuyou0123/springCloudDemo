@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.common.dao.DeptMapper">
+
+    <resultMap id="deptResultMap" type="com.common.Dept">
+        <id column="id" property="id"/>
+        <result column="dept_name" property="deptName"/>
+        <result column="dept_fid" property="deptFid"/>
+        <result column="user_id" property="userId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       id,dept_name,dept_fid,user_id
+    </sql>
+
+    <select id="getDeptList" resultMap="deptResultMap">
+      select
+        <include refid="Base_Column_List"/>
+      from test_dept
+        <where>
+            <if test="userIdList">
+                <foreach collection="userIdList" item="userId" open="(" close=")" separator=",">
+                    #{userId}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

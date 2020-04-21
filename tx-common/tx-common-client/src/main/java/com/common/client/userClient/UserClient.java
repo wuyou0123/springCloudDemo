@@ -1,4 +1,4 @@
-package com.common.client;
+package com.common.client.userClient;
 
 import com.common.config.TestConfig;
 import com.common.fallback.TestUserFallback;

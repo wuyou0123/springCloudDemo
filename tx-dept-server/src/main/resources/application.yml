@@ -1,0 +1,37 @@
+server:
+  port: 11001
+
+spring:
+  zipkin:
+    base-url: http://localhost:9411
+    enabled: true
+  sleuth:
+    sampler:
+      probability: 1.0
+    web:
+      client:
+        enabled: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/testdemo?serverTimezone=CTT&useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123456
+  application:
+    name: tx-dept-server
+  main:
+    allow-bean-definition-overriding: true
+
+moduleName: tx-dept-server
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://root:123456@localhost:9999/eureka/
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true
+
+mybatis:
+  mapper-locations: classpath:mapper/**/*Mapper.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
