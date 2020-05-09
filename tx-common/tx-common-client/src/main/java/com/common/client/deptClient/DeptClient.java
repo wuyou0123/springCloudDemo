@@ -22,4 +22,7 @@ public interface DeptClient {
 
     @RequestMapping(value = "/getDeptList",method = {RequestMethod.POST})
     public List<Dept> getDeptList(@RequestBody List<Integer> userIdList)throws Exception;
+
+    @RequestMapping(value = "/insertOne",method = {RequestMethod.POST})
+    public String insertOne(@RequestBody Dept dept)throws Exception;
 }

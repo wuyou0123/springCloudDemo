@@ -1,5 +1,5 @@
 server:
-  port: 18800
+  port: 10002
 
 spring:
   application:
@@ -24,6 +24,13 @@ spring:
     port: 6379
     password: 123456
 
+  rabbitmq:
+    password: guest
+    username: guest
+    port: 5672
+    host: localhost
+
+##配置注册中心
 eureka:
   client:
     service-url:
@@ -33,11 +40,12 @@ eureka:
     enabled: true
 moduleName: tx-consume
 
-
+##feign熔断措施
 feign:
   hystrix:
     enabled: true
 
+##配置熔断保护
 hystrix:
   command:
     default:
@@ -45,6 +53,8 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 20000
+
+##配置ribbon客户端负载均衡
 ribbon:
   eureka:
     enabled: true
@@ -53,6 +63,23 @@ ribbon:
     clients:
     - tx-server
     - tx-dept-server
+
+##日志等级debug
+logging:
+  level:
+    com:
+      codingapi:
+        txlcn: DEBUG
+
+##配置tx-lcn事务
+tx-lcn:
+  ribbon:
+    loadbalancer:
+      dtx:
+        enabled: true #是否采用轮询
+  #指向事务监听
+  client:
+    manager-address: localhost:8070
 
 
 

@@ -1,4 +1,3 @@
-/*
 package com.common.utils.rabbitMqutils;
 
 import org.slf4j.Logger;
@@ -10,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+/***
+ * 消息生产者，通常指服务提供着
+ */
 @Component
 public class MsgProducer implements RabbitTemplate.ConfirmCallback {
 
@@ -17,10 +19,9 @@ public class MsgProducer implements RabbitTemplate.ConfirmCallback {
 
     //由于rabbitTemplate的scope属性设置为ConfigurableBeanFactory.SCOPE_PROTOTYPE，所以不能自动注入
     private RabbitTemplate rabbitTemplate;
-    */
-/**
+    /*
      * 构造方法注入rabbitTemplate
-     *//*
+     */
 
     @Autowired
     public MsgProducer(RabbitTemplate rabbitTemplate) {
@@ -30,22 +31,20 @@ public class MsgProducer implements RabbitTemplate.ConfirmCallback {
 
     public void sendMsg(String content) {
         CorrelationData correlationId = new CorrelationData(UUID.randomUUID().toString());
-        //把消息放入ROUTINGKEY_A对应的队列当中去，对应的是队列A
+        //把消息放入ROUTINGKEY_A对应的队列当中去，对应的是队列A,convertAndSend - 转换并发送消息的template方法
         rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE_A, RabbitConfig.ROUTINGKEY_A, content, correlationId);
     }
-    */
-/**
+    /**
      * 回调
-     *//*
+     */
 
     @Override
     public void confirm(CorrelationData correlationData, boolean ack, String cause) {
         logger.info(" 回调id:" + correlationData);
         if (ack) {
-            logger.info("消息成功消费");
+            logger.info("Success... 消息成功发送到交换机!"+correlationData);
         } else {
             logger.info("消息消费失败:" + cause);
         }
     }
 }
-*/

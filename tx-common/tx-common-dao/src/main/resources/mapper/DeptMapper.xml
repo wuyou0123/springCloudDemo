@@ -27,5 +27,11 @@
         </where>
     </select>
 
+    <insert id="insertOne" parameterType="com.common.Dept">
+        insert into test_dept (dept_name,dept_fid,user_id)
+        values (#{deptName},#{deptFid},#{userId})
+
+    </insert>
+
 
 </mapper>

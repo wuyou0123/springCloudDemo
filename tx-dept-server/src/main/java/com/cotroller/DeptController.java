@@ -22,4 +22,9 @@ public class DeptController{
         List<Dept> deptList=deptServicce.getDeptList(userIdList);
         return  deptList;
     }
+
+    @RequestMapping(value = "/insertOne",method = {RequestMethod.POST})
+    public String insertOne(@RequestBody Dept dept)throws Exception{
+         return deptServicce.insertOne(dept);
+    }
 }

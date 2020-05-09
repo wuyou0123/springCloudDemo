@@ -1,23 +1,24 @@
 server:
   port: 9999
 
-
 eureka:
-  ##ʵ��
+  ##实例
   instance:
     hostname: localhost
     prefer-ip-address: true
   client:
+    ###是否将自己注册到Eureka服务中
     register-with-eureka: false
+    ###是否从Eureka中获取注册信息,因为自己为注册中心,不会在该应用中的检索服务信息
     fetch-registry: false
-    ##ָ��Ĭ�ϵ�ַ��ָ���뱾��ʵ����ͬ��������
+    ##指向默认地址（指向与本地实例相同的主机）
     serviceUrl:
       defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:${server.port}/eureka/
 
-##���ð�ȫ��¼У���û�������
+##配置安全登录校验用户和密码
 spring:
   application:
-    name: springcloud
+    name: tx-eureka
   security:
     user:
       name: root

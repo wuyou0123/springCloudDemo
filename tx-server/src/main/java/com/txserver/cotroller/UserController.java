@@ -1,6 +1,8 @@
 package com.txserver.cotroller;
 
+import com.common.TestUser;
 import com.txserver.service.UserServicce;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +28,11 @@ public class UserController {
         map.put("msg",msg);
         map.put("code",code);
         return  map;
+    }
+
+    @RequestMapping(value = "/insertAll",method = {RequestMethod.POST})
+    public void insertAll(@RequestBody TestUser testUser)throws Exception{
+        userServicce.insertAll(testUser);
     }
 
 }

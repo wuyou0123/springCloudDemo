@@ -22,5 +22,10 @@
         from test_user
     </select>
 
+    <insert id="insertAll" parameterType="com.common.TestUser">
+        insert into test_user (age,user_name,identity_card,phone)
+        values (#{age},#{userName},#{identityCard},#{phone})
+    </insert>
+
 
 </mapper>

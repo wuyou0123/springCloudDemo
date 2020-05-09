@@ -12,4 +12,6 @@ import java.util.Map;
 public interface DeptMapper {
 
     public List<Dept> getDeptList(Map<String,List<Integer>> map);
+
+    public Integer insertOne(Dept dept);
 }

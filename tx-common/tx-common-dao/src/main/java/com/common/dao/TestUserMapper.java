@@ -11,4 +11,6 @@ import java.util.List;
 public interface TestUserMapper {
 
      public List<TestUser> getAll();
+
+    public Integer insertAll(TestUser testUser);
 }

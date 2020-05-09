@@ -1,5 +1,5 @@
 server:
-  port: 11001
+  port: 10004
 
 spring:
   zipkin:
@@ -35,3 +35,15 @@ mybatis:
   mapper-locations: classpath:mapper/**/*Mapper.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+tx-lcn:
+  # 配置指向TM
+  client:
+    manager-address: localhost:8070
+  # 开启日志, 默认为false
+  logger:
+    enabled: true
+    driver-class-name: ${spring.datasource.driver-class-name}
+    jdbc-url: jdbc:mysql://localhost:3306/tx-lcn?serverTimezone=CTT&useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}

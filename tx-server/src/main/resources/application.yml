@@ -27,6 +27,24 @@ eureka:
 
 moduleName: tx-server
 
+tx-lcn:
+  # 配置指向TM
+  client:
+    manager-address: localhost:8070
+  # 开启日志, 默认为false
+  logger:
+    enabled: true
+    driver-class-name: ${spring.datasource.driver-class-name}
+    jdbc-url: jdbc:mysql://localhost:3306/tx-lcn?serverTimezone=CTT&useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+
+logging:
+  level:
+    com:
+      codingapi:
+        txlcn: debug
+
 server:
   port: 10001
 
@@ -34,3 +52,4 @@ mybatis:
   mapper-locations: classpath:mapper/**/*Mapper.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+

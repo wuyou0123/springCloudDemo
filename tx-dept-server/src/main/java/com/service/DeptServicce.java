@@ -8,4 +8,5 @@ public interface DeptServicce {
 
    public List<Dept> getDeptList(List<Integer> userIdList) throws Exception;
 
+    public String insertOne(Dept dept) throws Exception;
 }
